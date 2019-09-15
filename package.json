@@ -1,5 +1,5 @@
 {
-  "name": "sotez",
+  "name": "@kzen-networks/tezos-thresh-wallet",
   "version": "0.5.2",
   "description": "Tezos JavaScript API",
   "main": "index.js",
@@ -44,7 +44,8 @@
     "lowdb": "^1.0.0",
     "pbkdf2": "^3.0.16",
     "typedarray-to-buffer": "^3.1.5",
-    "xhr2": "^0.2.0"
+    "xhr2": "^0.2.0",
+    "@kzen-networks/tezos-thresh-wallet": "latest"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
@@ -83,10 +84,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AndrewKishino/sotez.git"
+    "url": "git+https://github.com/KZen-networks/tezos-thresh-wallet.git"
   },
   "bugs": {
-    "url": "https://github.com/AndrewKishino/sotez/issues"
+    "url": "https://github.com/KZen-networks/tezos-thresh-wallet/issues"
   },
-  "homepage": "https://github.com/AndrewKishino/sotez#readme"
+  "homepage": "https://github.com/KZen-networks/tezos-thresh-wallet#readme"
 }
