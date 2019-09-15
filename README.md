@@ -45,7 +45,7 @@ const party2 = new Ed25519Party2(P1_SERVER_ENDPOINT);
 ```
 
 ## Demo
-You can also use a demo using the command line.
+You can also use a demo using the command line.<br>
 Server:
 ```sh
 $ demo/server
