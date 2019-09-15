@@ -67,9 +67,6 @@ Commands:
 |![Transfer demo](https://raw.githubusercontent.com/KZen-networks/tezos-thresh-wallet/master/demo/tezos-tss-demo.gif "Tezos Threshold Wallet Demo")|
 |:--:|
 
-## Documentation
-Documentation can be found [HERE](https://github.com/KZen-networks/tezos-thresh-wallet/wiki/Documentation).
-
 ## Development
 ```js
 npm install
