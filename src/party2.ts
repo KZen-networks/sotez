@@ -1,6 +1,6 @@
 import { Ed25519Party2, Ed25519Party2Share } from '@kzen-networks/thresh-sig';
 import toBuffer from 'typedarray-to-buffer';
-import * as sodium from 'libsodium-wrappers';
+import sodium from 'libsodium-wrappers';
 import utility from './utility';
 import { prefix } from './constants';
 
@@ -47,7 +47,7 @@ export default class Party2 {
   publicKeyHash = (): string => {
     const publicKey = new Uint8Array(
       Buffer.from((this._p2Share as Ed25519Party2Share).getAggregatedPublicKey().apk.bytes_str.toString(), 'hex')
-    ).toString();
+    );
     return utility.b58cencode(sodium.crypto_generichash(20, publicKey), prefix.tz1);
   };
 
