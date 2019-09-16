@@ -6,7 +6,7 @@ Tezos wallet and JS SDK powered by two-party EdDSA (Ed25519).
 
 ## Installation
 ```sh
-npm install @kzen-networks/tezos-thresh-wallet
+yarn install @kzen-networks/tezos-thresh-wallet
 ```
 
 ## Usage
@@ -71,8 +71,8 @@ Commands:
 
 ## Development
 ```js
-npm install
-npm run build
+yarn install
+yarn run build
 ```
 Built files will be located in the `build/node` and `build/web` folders.
 

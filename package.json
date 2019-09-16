@@ -17,7 +17,7 @@
   "author": "Oded Leiba <oded@kzencorp.com>",
   "license": "MIT",
   "dependencies": {
-    "@kzen-networks/thresh-sig": "^0.3.3",
+    "@kzen-networks/thresh-sig": "^0.3.4",
     "@ledgerhq/hw-transport": "^4.70.0",
     "@ledgerhq/hw-transport-node-hid": "^4.70.0",
     "@ledgerhq/hw-transport-u2f": "^4.70.0",
