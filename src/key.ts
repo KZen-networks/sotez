@@ -1,6 +1,6 @@
-import * as sodium from 'libsodium-wrappers';
-import * as pbkdf2 from 'pbkdf2';
-import * as elliptic from 'elliptic';
+import sodium from 'libsodium-wrappers';
+import pbkdf2 from 'pbkdf2';
+import elliptic from 'elliptic';
 import toBuffer from 'typedarray-to-buffer';
 import utility from './utility';
 import { prefix } from './constants';

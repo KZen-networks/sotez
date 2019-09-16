@@ -35,7 +35,7 @@ export default class Party2 {
      * @returns {String} The shared (aggregated) public key associated with the secret share
      */
   publicKey = (): string => {
-    const publicKey = (this._p2Share as Ed25519Party2Share).getAggregatedPublicKey().apk.bytes_str;
+    const publicKey = (this._p2Share as Ed25519Party2Share).getAggregatedPublicKey().apk.bytes_str.toString();
     return utility.b58cencode(new Uint8Array(Buffer.from(publicKey, 'hex')), prefix.edpk);
   };
 
@@ -45,7 +45,9 @@ export default class Party2 {
      * @returns {String} The public key hash (address) for this secret share
      */
   publicKeyHash = (): string => {
-    const publicKey = new Uint8Array(Buffer.from(this._p2Share.getAggregatedPublicKey().apk.bytes_str, 'hex'));
+    const publicKey = new Uint8Array(
+      Buffer.from((this._p2Share as Ed25519Party2Share).getAggregatedPublicKey().apk.bytes_str.toString(), 'hex')
+    ).toString();
     return utility.b58cencode(sodium.crypto_generichash(20, publicKey), prefix.tz1);
   };
 

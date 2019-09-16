@@ -1,6 +1,7 @@
-import Sotez, { utility, crypto, Key } from '../index';
+const { utility, crypto, Key } = require('../dist/src');
+const TezClient = require('../dist/src').default;
 
-describe('sotez', () => {
+describe('tez-client', () => {
   describe('utility', () => {
     test('mintotz', () => {
       const num1 = 1000000;
@@ -276,7 +277,7 @@ describe('sotez', () => {
     let tez;
 
     beforeEach(() => {
-      tez = new Sotez();
+      tez = new TezClient();
     });
 
     test('init params', () => {

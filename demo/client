@@ -6,8 +6,8 @@ const fs = require('fs');
 const path = require('path');
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
-const { Ed25519Party2, Ed25519Party2Share } = require('../build/node');
-const TezClient = require('../build/node').default;
+const { Ed25519Party2, Ed25519Party2Share } = require('../dist/src');
+const TezClient = require('../dist/src').default;
 
 const client = new TezClient('http://alphanet-node.tzscan.io');
 

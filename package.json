@@ -2,21 +2,10 @@
   "name": "@kzen-networks/tezos-thresh-wallet",
   "version": "0.1.0",
   "description": "Tezos JavaScript API",
-  "main": "index.js",
-  "browser": "build/web/index.js",
-  "types": "types/index.d.ts",
-  "files": [
-    "build/",
-    "index.js",
-    "package.json",
-    "package-lock.json",
-    "types/"
-  ],
+  "main": "./dist/src/index.js",
+  "types": "./dist/types/index.d.ts",
   "scripts": {
-    "build": "npm run build:web && npm run build:node",
-    "build:node": "webpack --config webpack.node.config.js --progress",
-    "build:web": "webpack --config webpack.web.config.js --progress",
-    "lint": "tsc",
+    "build": "tsc",
     "test": "jest",
     "start-server": "demo/server"
   },
@@ -25,10 +14,10 @@
     "JavaScript",
     "API"
   ],
-  "author": "Andrew Kishino",
+  "author": "Oded Leiba <oded@kzencorp.com>",
   "license": "MIT",
   "dependencies": {
-    "@kzen-networks/thresh-sig": "^0.3.2",
+    "@kzen-networks/thresh-sig": "^0.3.3",
     "@ledgerhq/hw-transport": "^4.70.0",
     "@ledgerhq/hw-transport-node-hid": "^4.70.0",
     "@ledgerhq/hw-transport-u2f": "^4.70.0",
@@ -44,17 +33,9 @@
     "lowdb": "^1.0.0",
     "pbkdf2": "^3.0.16",
     "typedarray-to-buffer": "^3.1.5",
-    "xhr2": "^0.2.0",
-    "@kzen-networks/tezos-thresh-wallet": "latest"
+    "xhr2": "^0.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.0",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
-    "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
-    "@babel/plugin-transform-runtime": "^7.6.0",
-    "@babel/preset-env": "^7.6.0",
-    "@babel/preset-typescript": "^7.6.0",
-    "@babel/runtime": "^7.6.0",
     "@types/bip39": "^2.4.2",
     "@types/detect-node": "^2.0.0",
     "@types/elliptic": "^6.4.9",
@@ -67,7 +48,6 @@
     "@types/webpack-env": "^1.14.0",
     "@typescript-eslint/eslint-plugin": "^2.2.0",
     "@typescript-eslint/parser": "^2.2.0",
-    "babel-loader": "^8.0.6",
     "eslint": "^6.3.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
@@ -77,10 +57,7 @@
     "typedoc-plugin-external-module-name": "^2.1.0",
     "typedoc-plugin-markdown": "^2.1.11",
     "typedoc-webpack-plugin": "^1.1.4",
-    "typescript": "^3.6.3",
-    "webpack": "^4.39.3",
-    "webpack-cli": "^3.3.8",
-    "webpack-node-externals": "^1.7.2"
+    "typescript": "^3.6.3"
   },
   "repository": {
     "type": "git",
