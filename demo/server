@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 
-const { Ed25519Party1 } = require('../build/node');
+const { Ed25519Party1 } = require('../dist/src');
 
 new Ed25519Party1().launchServer();

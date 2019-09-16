@@ -1,6 +1,6 @@
 import { generateMnemonic as bip39GenerateMnemonic, mnemonicToSeed } from 'bip39';
-import * as pbkdf2 from 'pbkdf2';
-import * as _sodium from 'libsodium-wrappers';
+import pbkdf2 from 'pbkdf2';
+import _sodium from 'libsodium-wrappers';
 import toBuffer from 'typedarray-to-buffer';
 import utility from './utility';
 import { prefix } from './constants';

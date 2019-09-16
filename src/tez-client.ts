@@ -3,7 +3,6 @@ import AbstractTezModule from './tez-core';
 import Key from './key';
 import forge from './forge';
 import utility from './utility';
-import ledger from 'ledger';
 import { prefix, watermark, protocols } from './constants';
 import {Ed25519Party2, Ed25519Party2Share} from "@kzen-networks/thresh-sig";
 import Party2 from "./party2";
@@ -321,34 +320,6 @@ export default class TezClient extends AbstractTezModule {
   importEd25519Party2 = async (party2: Ed25519Party2, party2Share?: Ed25519Party2Share) => {
     this.party2 = new Party2(party2, party2Share);
     await this.party2.ready;
-  }
-
-  /**
-   * @description Import a ledger public key
-   * @param {String} [path="44'/1729'/0'/0'"] The ledger path
-   * @param {Number} [curve=0x00] The curve parameter
-   * ```javascript
-   * await client.importLedger();
-   * ```
-   */
-  importLedger = async (path: string = "44'/1729'/0'/0'", curve: number = 0x00) => {
-    if (curve !== 0x00) {
-      throw new Error('Only ed25519 curve (0x00) is supported for ledger at the moment.');
-    }
-    const { publicKey } = await ledger.getAddress({
-      path,
-      displayConfirm: true,
-      curve,
-    });
-
-    this.key = new Key(publicKey);
-    await this.key.ready;
-
-    if (this.key) {
-      this.key.isLedger = true;
-      this.key.ledgerPath = path;
-      this.key.ledgerCurve = curve;
-    }
   }
 
   /**
@@ -923,17 +894,7 @@ export default class TezClient extends AbstractTezModule {
   sendOperation = async ({ operation, source, skipPrevalidation = false, skipSignature = false }: OperationParams): Promise<any> => {
     const fullOp: ForgedBytes = await this.prepareOperation({ operation, source });
 
-    if (this.key && this.key.isLedger) {
-      const signature = await ledger.signOperation({
-        path: this.key.ledgerPath,
-        rawTxHex: fullOp.opbytes,
-        curve: this.key.ledgerCurve,
-      });
-      const sig = utility.hex2buf(signature);
-      const prefixSig = utility.b58cencode(sig, prefix[`${(this.key && this.key.curve) || 'ed'}sig`]);
-      fullOp.opbytes += signature;
-      fullOp.opOb.signature = prefixSig;
-    } else if (skipSignature) {
+    if (skipSignature) {
       fullOp.opbytes += '00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000';
       fullOp.opOb.signature = 'edsigtXomBKi5CTRf5cjATJWSyaRvhfYNHqSUGrn4SdbYRcGwQrUGjzEfQDTuqHhuA8b2d8NarZjz8TRf65WkpQmo423BtomS8Q';
     } else {
