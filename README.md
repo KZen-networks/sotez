@@ -74,7 +74,7 @@ Commands:
 yarn install
 yarn run build
 ```
-Built files will be located in the `build/node` and `build/web` folders.
+Built files will be located in the `dist` folder.
 
 ## License
 MIT
