@@ -1060,23 +1060,32 @@ export default class TezClient extends AbstractTezModule {
   }: ContractParams): Promise<any> => {
     let _code;
     let _init;
+    let script;
 
-    if (typeof code === 'string') {
-      _code = utility.ml2mic(code);
-    } else {
-      _code = code;
+    if (code || init) {
+
+      if (typeof code === 'string') {
+        _code = utility.ml2mic(code);
+      } else {
+        _code = code;
+      }
+
+      if (typeof init === 'string') {
+        _init = utility.sexp2mic(init);
+      } else {
+        _init = init;
+      }
+
+      script = {
+        code: _code,
+        storage: _init,
+      };
     }
 
-    if (typeof init === 'string') {
-      _init = utility.sexp2mic(init);
-    } else {
-      _init = init;
-    }
 
-    const script = {
-      code: _code,
-      storage: _init,
-    };
+
+
+
 
     const publicKeyHash = (this.key && this.key.publicKeyHash()) || this.party2.publicKeyHash();
     const operation: Operation = {
@@ -1086,8 +1095,8 @@ export default class TezClient extends AbstractTezModule {
       storage_limit: storageLimit,
       balance: utility.mutez(balance),
       manager_pubkey: publicKeyHash,
-      spendable,
-      delegatable,
+      spendable: spendable,
+      delegatable: delegatable,
       script,
     };
 
@@ -1122,8 +1131,11 @@ export default class TezClient extends AbstractTezModule {
       storage_limit: storageLimit,
       delegate,
     };
+
     return this.sendOperation({ operation: [operation], source });
   }
+
+
 
   /**
    * @description Register an account as a delegate
