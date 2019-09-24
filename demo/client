@@ -25,6 +25,59 @@ function ensureDirSync(dirpath) {
   }
 }
 
+originate = async (from, xtz_amount) => {
+    const p2Share = db.get('addresses').find({ address: from }).value().share;
+    if (!p2Share) {
+        console.error('Didn\'t find secret share for the provided from address');
+        return;
+    }
+    await client.importEd25519Party2(
+        new Ed25519Party2(P1_ENDPOINT),
+        new Ed25519Party2Share(p2Share.key_pair, p2Share.agg_pub_key, p2Share.id),
+    );
+    const amount = parseFloat(xtz_amount);
+    const res = await client.originate({
+        balance: amount,
+        spendable: true,
+        delegatable: true,
+        delegate: null
+    });
+    const contract_id = res.operations[0].metadata.operation_result.originated_contracts[0];
+    const hash = res.hash;
+    console.log(res);
+    console.log("contract_id: " + contract_id)
+    console.log(`Injected originate operation hash: ${hash}`);
+
+    // Await confirmation of included operation
+    const transferBlock = await client.awaitOperation(hash);
+    console.log(`Operation found in block ${transferBlock}`);
+    return contract_id;
+}
+
+delegate = async (from, manager, to) => {
+    const p2Share = db.get('addresses').find({ address: manager }).value().share;
+    if (!p2Share) {
+        console.error('Didn\'t find secret share for the provided from address');
+        return;
+    }
+    await client.importEd25519Party2(
+        new Ed25519Party2(P1_ENDPOINT),
+        new Ed25519Party2Share(p2Share.key_pair, p2Share.agg_pub_key, p2Share.id),
+    );
+
+    const { hash } = await client.setDelegate({
+        delegate: to,
+        source: from
+    });
+    console.log(`Injected delegate operation hash: ${hash}`);
+
+    // Await confirmation of included operation
+    const transferBlock = await client.awaitOperation(hash);
+    console.log(`Operation found in block ${transferBlock}`);
+}
+
+
+
 ensureDirSync(CLIENT_DB_PATH);
 const adapter = new FileSync(path.join(CLIENT_DB_PATH, 'db.json'));
 const db = low(adapter);
@@ -70,5 +123,23 @@ program
     const transferBlock = await client.awaitOperation(hash);
     console.log(`Operation found in block ${transferBlock}`);
   });
+
+program
+    .command('originate <from> <xtz_amount>')
+    .action( originate );
+
+program
+    .command('delegate <from> <manager> <to>')
+    .action ( delegate );
+
+program
+    .command('stake <from> <to> <xtz_amount>')
+    .action ( async (from, to, xtz_amount) => {
+        console.log("originating")
+        const contract_id = await originate(from, xtz_amount);
+        console.log("delegating")
+        delegate(contract_id, from, to)
+    });
+
 
 program.parse(process.argv);
