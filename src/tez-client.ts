@@ -754,7 +754,7 @@ export default class TezClient extends AbstractTezModule {
       head = header;
 
       if (requiresReveal) {
-        const managerKey = metadata.next_protocol === protocols['005'] ? manager : manager.key;
+        const managerKey = this._getManagerKey(manager, metadata.protocol);
         if (!managerKey) {
           const reveal: Operation = {
             kind: 'reveal',
@@ -1284,4 +1284,29 @@ export default class TezClient extends AbstractTezModule {
       storage: _storage,
     });
   }
+
+  /**
+   * Get the mananger key from the protocol dependent query
+   * @param {Object|string} manager The manager key query response
+   * @param {string} protocol The protocol of the current block
+   * @returns {string} If manager exists, returns the manager key
+   */
+  _getManagerKey = (manager: any, protocol: string): string | null => {
+    if (!manager) {
+      return null;
+    }
+    const protocolMap = {
+      [`${protocols['001']}`]: manager.key,
+      [`${protocols['002']}`]: manager.key,
+      [`${protocols['003']}`]: manager.key,
+      [`${protocols['004']}`]: manager.key,
+      [`${protocols['005a']}`]: manager,
+      [`${protocols['005']}`]: manager,
+      [`${protocols['006']}`]: manager,
+    };
+    if (!protocolMap[protocol]) {
+      throw new Error(`Unrecognized protocol: ${protocol}`);
+    }
+    return protocolMap[protocol];
+  };
 }
