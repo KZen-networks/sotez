@@ -5,8 +5,13 @@
 Tezos wallet and JS SDK powered by two-party EdDSA (Ed25519).
 
 ## Installation
+1. Install [Node.js](https://nodejs.org/en/download/)<br>
+(tested on Node 10)
+2. Install [nightly Rust](https://github.com/rust-lang/rustup.rs#installation)<br>
+(tested on rustc 1.38.0-nightly (0b680cfce 2019-07-09))
+3. Install the package:
 ```sh
-npm install @kzen-networks/tezos-thresh-wallet
+$ npm install @kzen-networks/tezos-thresh-wallet
 ```
 
 ## Usage
@@ -70,9 +75,11 @@ Commands:
 |:--:|
 
 ## Development
-```js
-npm install
-npm run build
+```sh
+$ git clone https://github.com/KZen-networks/tezos-thresh-wallet
+$ cd tezos-thresh-wallet
+$ npm install
+$ npm run build
 ```
 Built files will be located in the `dist` folder.
 
