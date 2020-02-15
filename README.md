@@ -63,12 +63,13 @@ $ demo/client --help
 Usage: client [options] [command]
 
 Options:
-  -h, --help                        output usage information
+  -h, --help                           output usage information
 
 Commands:
-  address
-  balance <address>
-  transfer <from> <to> <xtz_amount>
+  generate-address|a                   Generate a new Tezos address
+  balance|b <address>                  Get the balance of a Tezos address
+  transfer|t <from> <to> <xtz_amount>  Transfer XTZ
+  delegate|d <from> <to>               Delegate account funds to a given delegator for staking
 ```
 
 |![Transfer demo](https://raw.githubusercontent.com/KZen-networks/tezos-thresh-wallet/master/demo/tezos-tss-demo.gif "Tezos Threshold Wallet Demo")|

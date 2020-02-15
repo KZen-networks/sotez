@@ -52,7 +52,9 @@ async function delegate(from, to) {
 }
 
 program
-  .command('address')
+  .command('generate-address')
+  .description('Generate a new Tezos address')
+  .alias('a')
   .action(async () => {
     await client.importEd25519Party2(party2);
     const address = client.party2.publicKeyHash();
@@ -61,7 +63,17 @@ program
   });
 
 program
+  .command('list-addresses')
+  .description('List all addresses previously generated')
+  .alias('la')
+  .action(async () => {
+    console.log(db.get('addresses').map((a) => a.address).value());
+  });
+
+program
   .command('balance <address>')
+  .description('Get the balance of a Tezos address')
+  .alias('b')
   .action(async (address) => {
     const balance = await client.getBalance(address);
     console.log(`${balance / MUTEZ_IN_XTZ} XTZ`);
@@ -69,6 +81,8 @@ program
 
 program
   .command('transfer <from> <to> <xtz_amount>')
+  .description('Transfer XTZ')
+  .alias('t')
   .action(async (from, to, xtz_amount) => {
     const p2Share = db.get('addresses').find({ address: from }).value().share;
     if (!p2Share) {
@@ -94,6 +108,8 @@ program
 
 program
   .command('delegate <from> <to>')
+  .description('Delegate account funds to a given delegator for staking')
+  .alias('d')
   .action(delegate);
 
 program.parse(process.argv);
